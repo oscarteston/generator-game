@@ -1,6 +1,7 @@
+
 # generator-game [![Build Status](https://secure.travis-ci.org/rafinskipg/generator-game.png?branch=master)](https://travis-ci.org/rafinskipg/generator-game)
 
-A generator for [Yeoman](http://yeoman.io).
+A generator for testing different JS game development libraries / tools with the help of [Yeoman](http://yeoman.io).
 
 
 ## Getting Started
@@ -45,3 +46,8 @@ If you'd like to get to know Yeoman better and meet some of his friends, [Grunt]
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+=======
+
+
+
+
