@@ -1,7 +1,8 @@
 {
   "name": "<%= _.slugify(appname) %>",
   "version": "0.0.0",
-  "dependencies": {<% if (compassBootstrap) { %>
+  "dependencies": {<% if (gameLibrary) { %>
+    "<%= gameLibrary.value %>": "<%= gameLibrary.version %>",<% } %><% if (compassBootstrap) { %>
     "sass-bootstrap": "~3.0.0",<% } %><% if (includeModernizr) { %>
     "modernizr": "~2.6.2",<% } %>
     "jquery": "~1.10.2"

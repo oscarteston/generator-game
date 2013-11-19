@@ -418,7 +418,6 @@ module.exports = function (grunt) {
         'uglify',<% if (includeModernizr) { %>
         'modernizr',<% } %>
         'copy:dist',
-        'rev',
         'usemin'
     ]);
 

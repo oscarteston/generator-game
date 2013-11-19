@@ -67,6 +67,12 @@ body {
     margin-top: 28px;
 }
 
+
+canvas{
+    width: 500px;
+    height: 500px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .container {

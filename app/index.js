@@ -61,54 +61,65 @@ GameGenerator.prototype.askFor = function askFor() {
     this.compassBootstrap = hasFeature('compassBootstrap');
     this.includeModernizr = hasFeature('includeModernizr');
 
-    this.library = props.library;
+    this.gameLibrary  = props.library;
+
+    mapPropertiesGameLibrary();
+
+
     console.log(this.library);
 
     cb();
   }.bind(this));
 };
 
-
+function mapPropertiesGameLibrary(){
+  switch(this.gameLibrary.value){
+    case "melonJS":
+      this.gameLibrary.src = "bower_components/melonjs/melonjs.js";
+      this.gameLibrary.version = "2.0.3";
+    break;
+  }
+}
 
 GameGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');
   this.copy('jshintrc', '.jshintrc');
 };
 
-AppGenerator.prototype.gruntfile = function gruntfile() {
+GameGenerator.prototype.gruntfile = function gruntfile() {
   this.template('Gruntfile.js');
 };
 
-AppGenerator.prototype.packageJSON = function packageJSON() {
+GameGenerator.prototype.packageJSON = function packageJSON() {
   this.template('_package.json', 'package.json');
 };
 
-AppGenerator.prototype.git = function git() {
+GameGenerator.prototype.git = function git() {
   this.copy('gitignore', '.gitignore');
   this.copy('gitattributes', '.gitattributes');
 };
 
-AppGenerator.prototype.bower = function bower() {
+GameGenerator.prototype.bower = function bower() {
   this.copy('bowerrc', '.bowerrc');
   this.copy('_bower.json', 'bower.json');
 };
 
-AppGenerator.prototype.jshint = function jshint() {
+GameGenerator.prototype.jshint = function jshint() {
   this.copy('jshintrc', '.jshintrc');
 };
 
-AppGenerator.prototype.editorConfig = function editorConfig() {
+GameGenerator.prototype.editorConfig = function editorConfig() {
   this.copy('editorconfig', '.editorconfig');
 };
 
-AppGenerator.prototype.h5bp = function h5bp() {
+GameGenerator.prototype.h5bp = function h5bp() {
   this.copy('favicon.ico', 'app/favicon.ico');
   this.copy('404.html', 'app/404.html');
   this.copy('robots.txt', 'app/robots.txt');
   this.copy('htaccess', 'app/.htaccess');
 };
 
-AppGenerator.prototype.mainStylesheet = function mainStylesheet() {
+GameGenerator.prototype.mainStylesheet = function mainStylesheet() {
   if (this.compassBootstrap) {
     this.copy('main.scss', 'app/styles/main.scss');
   } else {
@@ -116,23 +127,13 @@ AppGenerator.prototype.mainStylesheet = function mainStylesheet() {
   }
 };
 
-AppGenerator.prototype.writeIndex = function writeIndex() {
+GameGenerator.prototype.writeIndex = function writeIndex() {
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
   this.indexFile = this.engine(this.indexFile, this);
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
     'scripts/main.js'
   ]);
-
-  if (this.coffee) {
-    this.indexFile = this.appendFiles({
-      html: this.indexFile,
-      fileType: 'js',
-      optimizedPath: 'scripts/coffee.js',
-      sourceFileList: ['scripts/hello.js'],
-      searchPath: '.tmp'
-    });
-  }
 
   if (this.compassBootstrap) {
     // wire Twitter Bootstrap plugins
@@ -151,6 +152,24 @@ AppGenerator.prototype.writeIndex = function writeIndex() {
       'bower_components/sass-bootstrap/js/tab.js'
     ]);
   }
+
+  if(this.gameLibrary) {
+    /*this.gameLibrary.dependencies 
+    this.indexFile = this.appendScripts(this.indexFile, 'scripts/'+this.gameLibrary.name'.js', [
+      this.gameLibrary.src,
+      'bower_components/sass-bootstrap/js/alert.js',
+      'bower_components/sass-bootstrap/js/dropdown.js',
+      'bower_components/sass-bootstrap/js/tooltip.js',
+      'bower_components/sass-bootstrap/js/modal.js',
+      'bower_components/sass-bootstrap/js/transition.js',
+      'bower_components/sass-bootstrap/js/button.js',
+      'bower_components/sass-bootstrap/js/popover.js',
+      'bower_components/sass-bootstrap/js/carousel.js',
+      'bower_components/sass-bootstrap/js/scrollspy.js',
+      'bower_components/sass-bootstrap/js/collapse.js',
+      'bower_components/sass-bootstrap/js/tab.js'
+    ]);
+  }*/
 };
 
 AppGenerator.prototype.app = function app() {
@@ -160,9 +179,4 @@ AppGenerator.prototype.app = function app() {
   this.mkdir('app/images');
   this.write('app/index.html', this.indexFile);
 
-  if (this.coffee) {
-    this.write('app/scripts/hello.coffee', this.mainCoffeeFile);
-  }
-
-  this.write('app/scripts/main.js', 'console.log(\'\\\'Allo \\\'Allo!\');');
 };
