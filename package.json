@@ -1,9 +1,13 @@
 {
   "name": "generator-game",
   "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "description": "A JS Game library tester for Yeoman",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "game",
+    "game-generator",
+    "canvas",
+    "games"
   ],
   "homepage": "https://github.com/rafinskipg/generator-game",
   "bugs": "https://github.com/rafinskipg/generator-game/issues",
