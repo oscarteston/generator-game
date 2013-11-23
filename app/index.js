@@ -2,7 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-
+var fs = require('fs');
 
 var GameGenerator = module.exports = function GameGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
@@ -18,7 +18,7 @@ util.inherits(GameGenerator, yeoman.generators.Base);
 
 GameGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
-
+  var libFile = fs.readSync('app/libraries.json');
   // have Yeoman greet the user.
   console.log(this.yeoman);
 
@@ -26,16 +26,7 @@ GameGenerator.prototype.askFor = function askFor() {
     type: 'list',
     name: 'library',
     message: 'Which library would you like to include?',
-    choices: [{
-      value: 'melonJS',
-      name: 'Melon JS'
-    }, {
-      value: 'easeljs',
-      name: 'Easel JS'
-    }, {
-      value: 'crafty',
-      name: 'Crafty'
-    },
+    choices: [libFile.libraries],
     {
     type: 'checkbox',
     name: 'features',
@@ -51,7 +42,7 @@ GameGenerator.prototype.askFor = function askFor() {
     }]
   }];
 
-  this.prompt(prompts, function (props) {
+  this.prompt(prompts, function (answers) {
     var features = answers.features;
 
     function hasFeature(feat) { return features.indexOf(feat) !== -1; }
@@ -61,10 +52,7 @@ GameGenerator.prototype.askFor = function askFor() {
     this.compassBootstrap = hasFeature('compassBootstrap');
     this.includeModernizr = hasFeature('includeModernizr');
 
-    this.gameLibrary  = props.library;
-
-    mapPropertiesGameLibrary();
-
+    this.gameLibrary  = answers.library;
 
     console.log(this.library);
 
@@ -72,14 +60,6 @@ GameGenerator.prototype.askFor = function askFor() {
   }.bind(this));
 };
 
-function mapPropertiesGameLibrary(){
-  switch(this.gameLibrary.value){
-    case "melonJS":
-      this.gameLibrary.src = "bower_components/melonjs/melonjs.js";
-      this.gameLibrary.version = "2.0.3";
-    break;
-  }
-}
 
 GameGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');

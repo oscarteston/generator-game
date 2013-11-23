@@ -1,0 +1,17 @@
+{
+	"libraries" : [
+		"melonJS":{
+			"src" : "bower_components/melonjs/melonjs.js",
+			"value": "melonJS",
+			"version" : "2.0.3",
+			"name": "Melon JS"
+		},
+		"canvace":{
+			"src" : "bower_components/canvace/canvace.js",
+			"value": "canvace",
+			"version" : "0.1.0",
+			"name": "Canvace JS"
+		}
+
+	]
+}
