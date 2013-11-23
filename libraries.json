@@ -9,7 +9,7 @@
 		"canvace":{
 			"src" : "bower_components/canvace/canvace.js",
 			"value": "canvace",
-			"version" : "0.1.0",
+			"version" : "*",
 			"name": "Canvace JS"
 		}
 

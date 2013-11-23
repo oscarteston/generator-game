@@ -26,15 +26,7 @@ module.exports = function (grunt) {
         },
 
         // Watches files for changes and runs tasks based on the changed files
-        watch: {<% if (coffee) { %>
-            coffee: {
-                files: ['<%%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-                tasks: ['coffee:dist']
-            },
-            coffeeTest: {
-                files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
-                tasks: ['coffee:test']
-            },<% } %>
+        watch: {
             gruntfile: {
                 files: ['Gruntfile.js']
             },

@@ -3,12 +3,34 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var fs = require('fs');
+var _ = require('lodash');
+
 
 var GameGenerator = module.exports = function GameGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
+  // setup the test-framework property, Gruntfile template will need this
+  this.testFramework = options['test-framework'] || 'mocha';
+  this.coffee = options.coffee;
+
+  // for hooks to resolve on mocha by default
+  options['test-framework'] = this.testFramework;
+
+  // resolved to mocha by default (could be switched to jasmine for instance)
+  this.hookFor('test-framework', { as: 'app' });
+
+  this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
+
+  //Load libraries
+  //var libFile = fs.readFileSync('libraries.json');
+  var libFile = getLibraries();
+  this.libraries = libFile.libraries;
+
   this.on('end', function () {
-    this.installDependencies({ skipInstall: options['skip-install'] });
+    this.installDependencies({
+      skipInstall: options['skip-install'],
+      skipMessage: options['skip-install-message']
+    });
   });
 
   this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
@@ -18,29 +40,32 @@ util.inherits(GameGenerator, yeoman.generators.Base);
 
 GameGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
-  var libFile = fs.readSync('app/libraries.json');
+
+  console.log(this.libraries);
   // have Yeoman greet the user.
   console.log(this.yeoman);
 
-  var prompts = [{
-    type: 'list',
-    name: 'library',
-    message: 'Which library would you like to include?',
-    choices: [libFile.libraries],
+  var prompts = [
     {
-    type: 'checkbox',
-    name: 'features',
-    message: 'What more would you like?',
-    choices: [{
-      name: 'Bootstrap for Sass',
-      value: 'compassBootstrap',
-      checked: true
-    }, {
-      name: 'Modernizr',
-      value: 'includeModernizr',
-      checked: true
-    }]
-  }];
+      type: 'list',
+      name: 'library',
+      message: 'Which library would you like to include?',
+      choices: this.libraries,
+    },{
+      type: 'checkbox',
+      name: 'features',
+      message: 'What more would you like?',
+      choices: [{
+        name: 'Bootstrap for Sass',
+        value: 'compassBootstrap',
+        checked: true
+      }, {
+        name: 'Modernizr',
+        value: 'includeModernizr',
+        checked: true
+      }]
+    }
+  ];
 
   this.prompt(prompts, function (answers) {
     var features = answers.features;
@@ -51,10 +76,11 @@ GameGenerator.prototype.askFor = function askFor() {
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
     this.compassBootstrap = hasFeature('compassBootstrap');
     this.includeModernizr = hasFeature('includeModernizr');
+    this.appName = answers.library;
+    
+    this.gameLibrary  = getLibrary(answers.library, this.libraries);
 
-    this.gameLibrary  = answers.library;
-
-    console.log(this.library);
+    console.log(this.gameLibrary);
 
     cb();
   }.bind(this));
@@ -133,8 +159,10 @@ GameGenerator.prototype.writeIndex = function writeIndex() {
     ]);
   }
 
-  if(this.gameLibrary) {
-    /*this.gameLibrary.dependencies 
+  
+    /*
+    if(this.gameLibrary) {
+    this.gameLibrary.dependencies 
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/'+this.gameLibrary.name'.js', [
       this.gameLibrary.src,
       'bower_components/sass-bootstrap/js/alert.js',
@@ -152,7 +180,7 @@ GameGenerator.prototype.writeIndex = function writeIndex() {
   }*/
 };
 
-AppGenerator.prototype.app = function app() {
+GameGenerator.prototype.app = function app() {
   this.mkdir('app');
   this.mkdir('app/scripts');
   this.mkdir('app/styles');
@@ -160,3 +188,31 @@ AppGenerator.prototype.app = function app() {
   this.write('app/index.html', this.indexFile);
 
 };
+function getLibrary(name, libraries){
+  console.log("get library");
+  var itemR ;
+  _(libraries).forEach(function(item, indx){
+    console.log(item.value, name);
+     if(item.value == name){
+      itemR = item;
+     }
+  });
+  return itemR;
+}
+function getLibraries (){
+ return {
+  "libraries" : [
+    {
+      "src" : "bower_components/melonjs/melonjs.js",
+      "value": "melonJS",
+      "version" : "~0.9.10",
+      "name": "Melon JS"
+    },
+    {
+      "src" : "bower_components/canvace/canvace.js",
+      "value": "canvace",
+      "version" : "*",
+      "name": "Canvace JS"
+    }
+  ]}
+}
