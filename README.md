@@ -3,6 +3,12 @@
 
 A generator for testing different JS game development libraries / tools with the help of [Yeoman](http://yeoman.io).
 
+To install generator-game from npm, run:
+
+```
+$ npm install -g generator-game
+```
+
 ## Available libraries for development: 
 
 * [Melon JS](http://melonjs.org/)
