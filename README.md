@@ -8,6 +8,11 @@ To install generator-game from npm, run:
 ```
 $ npm install -g generator-game
 ```
+In a empty folder type
+
+```
+$ yo game
+```
 
 ## Available libraries for development: 
 
