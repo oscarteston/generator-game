@@ -3,8 +3,26 @@
 
 A generator for testing different JS game development libraries / tools with the help of [Yeoman](http://yeoman.io).
 
+## Available libraries for development: 
 
-## Getting Started
+* [Melon JS](http://melonjs.org/)
+* [Canvace](http://canvace.com/)
+
+We are adding more libraries from this [list](https://github.com/bebraw/jswiki/wiki/Game-Engines)
+
+*You can help submitting a pull request with the new library added.*
+![](http://www.monchacos.com/experiments/BombTouch/img/nyan1.png)
+
+## List of Free Game assets and resources
+
+* [Free Game Dev 2D, 3D, Audio](http://freegamedev.net/wiki/index.php/Free_3D_and_2D_art_and_audio_resources)
+* [List of resources ](http://love2d.org/wiki/Free_Game_Resources)
+
+*You can help submitting a pull request with more resources!!!.*
+![](http://www.monchacos.com/experiments/BombTouch/img/nyan1.png)
+
+
+## If you don't understand what to do with yeoman read this:
 
 ### What is Yeoman?
 
