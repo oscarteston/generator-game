@@ -13,8 +13,11 @@ describe('game generator', function () {
             }
 
             this.app = helpers.createGenerator('game:app', [
-                '../../app'
-            ]);
+                '../../app', [
+              helpers.createDummyGenerator(),
+              'mocha:app'
+            ]
+          ]);
             done();
         }.bind(this));
     });
