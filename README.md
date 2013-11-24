@@ -1,7 +1,7 @@
 
 # generator-game [![Build Status](https://secure.travis-ci.org/rafinskipg/generator-game.png?branch=master)](https://travis-ci.org/rafinskipg/generator-game)
 
-A generator for testing different JS game development libraries / tools with the help of [Yeoman](http://yeoman.io).
+A generator for testing different JS game development libraries with the help of [Yeoman](http://yeoman.io).
 
 To install generator-game from npm, run:
 
