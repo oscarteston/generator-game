@@ -28,12 +28,7 @@ describe('game generator', function () {
 
         helpers.mockPrompt(this.app, {
           features: ['compassBootstrap'],
-          library : {
-              "src" : "bower_components/melonjs/melonjs.js",
-              "value": "melonJS",
-              "version" : "~0.9.10",
-              "name": "Melon JS"
-            }
+          library : ['melonJS']
         });
 
         this.app.options['skip-install'] = true;
