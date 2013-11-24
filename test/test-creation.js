@@ -26,7 +26,7 @@ describe('game generator', function () {
             '.editorconfig'
         ];
 
-        helpers.mockPrompt(this.webapp, {
+        helpers.mockPrompt(this.app, {
           features: ['compassBootstrap'],
           library : {
               "src" : "bower_components/melonjs/melonjs.js",
